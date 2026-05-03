@@ -4,6 +4,8 @@
 
 Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impact faster*
 
+[![Demo Video](https://img.youtube.com/vi/9qsrnJGC8fg/0.jpg)](https://www.youtube.com/watch?v=9qsrnJGC8fg)
+
 ---
 
 ## The Problem
