@@ -24,7 +24,9 @@ function loadEnv() {
 loadEnv();
 
 function callBobCLI(prompt) {
-  const escaped = prompt.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/`/g, '\\`');
+  // Prepend instruction to prevent Bob from trying to read files
+  const fullPrompt = `IMPORTANT: Do not use any file reading tools. Use ONLY the codebase snapshot provided in this prompt. Here is the task:\n\n${prompt}`;
+  const escaped = fullPrompt.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/`/g, '\\`');
   const result = execSync(`bob do "${escaped}"`, { encoding: 'utf8', timeout: 180000 });
   const match = result.match(/---output---\n([\s\S]*?)\n---output---/);
   return match ? match[1].trim() : result.trim();
