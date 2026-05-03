@@ -1,10 +1,10 @@
 {
-  "name": "dev-onboarder",
+  "name": "repo-onboarder",
   "version": "1.0.0",
-  "description": "Developer Onboarding Accelerator - Automatically generate onboarding documentation from GitHub repos",
+  "description": "Turn any GitHub repo into a complete onboarding package — README, Architecture, Getting Started, and Tests — powered by IBM Bob",
   "main": "index.js",
   "bin": {
-    "dev-onboarder": "./cli.js"
+    "repo-onboarder": "./cli.js"
   },
   "scripts": {
     "start": "node server.js",
@@ -14,10 +14,17 @@
     "onboarding",
     "documentation",
     "cli",
-    "developer-tools"
+    "developer-tools",
+    "ibm-bob",
+    "readme-generator",
+    "architecture"
   ],
-  "author": "",
+  "author": "Fahed Daibes",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RandomProjects-db/Developer-Onboarding-Accelerator"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
