@@ -119,7 +119,8 @@ async function callGroqAPI(prompt, description) {
   return `# ${description}\n\nAll models failed. Check API key and rate limits.`;
 }
 
-function sleep(ms) {
+// Use longer delays on cloud (no Bob CLI) to avoid Groq rate limits
+const GROQ_DELAY = process.env.RAILWAY_ENVIRONMENT ? 15000 : 8000;
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -150,7 +151,7 @@ Generate a clear, well-structured README.md:`;
   
   const readmeContent = await callGroqAPI(readmePrompt, 'README-GENERATED.md');
   fs.writeFileSync(path.join(outputDir, 'README-GENERATED.md'), readmeContent);
-  await sleep(8000);
+  await sleep(GROQ_DELAY);
   
   // Generate ARCHITECTURE.md
   const archPrompt = `You are a software architect. Given the following codebase snapshot, generate an architecture overview in markdown format that explains:
@@ -166,7 +167,7 @@ Generate a detailed architecture document:`;
   
   const archContent = await callGroqAPI(archPrompt, 'ARCHITECTURE.md');
   fs.writeFileSync(path.join(outputDir, 'ARCHITECTURE.md'), archContent);
-  await sleep(8000);
+  await sleep(GROQ_DELAY);
   
   // Generate GETTING-STARTED.md
   const gettingStartedPrompt = `You are a developer onboarding specialist. Given the following codebase snapshot, generate a getting started guide in markdown format that includes:
@@ -182,7 +183,7 @@ Generate a comprehensive getting started guide:`;
   
   const gettingStartedContent = await callGroqAPI(gettingStartedPrompt, 'GETTING-STARTED.md');
   fs.writeFileSync(path.join(outputDir, 'GETTING-STARTED.md'), gettingStartedContent);
-  await sleep(8000);
+  await sleep(GROQ_DELAY);
   
   // Generate TESTS-GENERATED.js - use smaller snapshot to avoid timeout
   const testsSnapshot = snapshotText.length > 3000
