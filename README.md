@@ -14,6 +14,7 @@ npx repo-onboarder https://github.com/expressjs/express
 
 > If IBM Bob CLI is installed and authenticated, it will be used automatically.  
 > If not, the tool falls back to Groq (configure `GROQ_API_KEY`).
+GROQ_API_KEY=your_key npx repo-onboarder <repo-url>
 
 ## 🎬 Demo Video 🎬
 
