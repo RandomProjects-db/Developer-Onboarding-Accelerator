@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Onboarding Accelerator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>🚀 Developer Onboarding Accelerator</h1>
+        <p>Generate onboarding docs from any GitHub repo</p>
+      </div>
+      
+      <div class="input-section">
+        <label for="github-url">GitHub Repository URL</label>
+        <input 
+          type="text" 
+          id="github-url" 
+          placeholder="https://github.com/expressjs/express"
+          value="https://github.com/sindresorhus/is"
+        >
+        <button id="run-btn" class="btn-primary">Run Bob</button>
+      </div>
+      
+      <div class="progress-section">
+        <h3>Progress Log</h3>
+        <div id="progress-log" class="terminal"></div>
+      </div>
+      
+      <div class="files-section">
+        <h3>Generated Files</h3>
+        <ul id="file-list" class="file-list">
+          <li data-file="readme" class="disabled">📄 README</li>
+          <li data-file="architecture" class="disabled">🏗️ Architecture</li>
+          <li data-file="gettingStarted" class="disabled">🎯 Getting Started</li>
+          <li data-file="tests" class="disabled">🧪 Tests</li>
+        </ul>
+      </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main class="content">
+      <div class="content-header">
+        <div class="tabs">
+          <button class="tab active" data-tab="readme">README</button>
+          <button class="tab" data-tab="architecture">Architecture</button>
+          <button class="tab" data-tab="gettingStarted">Getting Started</button>
+          <button class="tab" data-tab="tests">Tests</button>
+        </div>
+        <button id="copy-btn" class="btn-secondary" disabled>📋 Copy</button>
+      </div>
+      
+      <div class="content-body">
+        <div id="content-readme" class="tab-content active">
+          <div class="placeholder">
+            <h2>Welcome! 👋</h2>
+            <p>Enter a GitHub repository URL and click "Run Bob" to generate comprehensive onboarding documentation.</p>
+            <ul>
+              <li>📄 <strong>README</strong> - Plain English explanation of the project</li>
+              <li>🏗️ <strong>Architecture</strong> - Code organization and design patterns</li>
+              <li>🎯 <strong>Getting Started</strong> - Where new developers should begin</li>
+              <li>🧪 <strong>Tests</strong> - Unit tests for main functions</li>
+            </ul>
+          </div>
+        </div>
+        <div id="content-architecture" class="tab-content"></div>
+        <div id="content-gettingStarted" class="tab-content"></div>
+        <div id="content-tests" class="tab-content"></div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

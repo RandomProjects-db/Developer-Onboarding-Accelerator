@@ -1,0 +1,27 @@
+{
+  "name": "dev-onboarder",
+  "version": "1.0.0",
+  "description": "Developer Onboarding Accelerator - Automatically generate onboarding documentation from GitHub repos",
+  "main": "index.js",
+  "bin": {
+    "dev-onboarder": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "onboarding",
+    "documentation",
+    "cli",
+    "developer-tools"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2"
+  }
+}
