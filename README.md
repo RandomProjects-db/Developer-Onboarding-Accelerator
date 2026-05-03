@@ -156,6 +156,49 @@ GROQ_API_KEY=your_groq_api_key_here   # Free at https://console.groq.com
 
 ---
 
+## NPM Package
+
+**repo-onboarder** is published on npm and can be used without cloning this repository.
+
+### Installation & Usage
+
+```bash
+# Option 1: Run directly with npx (no installation required)
+npx repo-onboarder https://github.com/expressjs/express
+
+# Option 2: Install globally
+npm install -g repo-onboarder
+repo-onboarder https://github.com/expressjs/express
+```
+
+### Configuration
+
+Create a `.env` file in your current directory with your Groq API key:
+
+```bash
+# .env
+GROQ_API_KEY=your_groq_api_key_here
+```
+
+Or set it as an environment variable:
+
+```bash
+GROQ_API_KEY=your_key npx repo-onboarder <repo-url>
+```
+
+### How It Works
+
+1. **Primary**: Uses IBM Bob CLI if installed locally (`bob do` command)
+2. **Fallback**: Uses Groq API with model chain:
+   - `llama-3.3-70b-versatile`
+   - `meta-llama/llama-4-scout-17b-16e-instruct`
+   - `llama-3.1-8b-instant`
+   - `allam-2-7b`
+
+Output files are saved to `./output/` in your current directory.
+
+---
+
 ## Usage
 
 ### CLI
