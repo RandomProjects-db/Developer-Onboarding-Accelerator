@@ -7,7 +7,7 @@ Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impac
 ## Quick start (fastest)
 
 ```bash
-# Runs via the published npm package (recommended for judges)
+# Runs via the published npm package
 npx repo-onboarder https://github.com/expressjs/express
 # Output written to ./output
 ```
