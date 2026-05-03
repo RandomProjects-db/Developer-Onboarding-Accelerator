@@ -113,6 +113,16 @@ async function callGroqAPI(prompt, description) {
       return content;
     } catch (e) {
       process.stderr.write(`   ⚠️  ${model} failed: ${e.message}\n`);
+      // If rate limited, wait and retry once before trying next model
+      if (e.message.includes('Rate limit')) {
+        await sleep(10000);
+        try {
+          const content = await callGroqModel(prompt, model, apiKey);
+          return content;
+        } catch (e2) {
+          process.stderr.write(`   ⚠️  ${model} retry failed\n`);
+        }
+      }
     }
   }
 
@@ -120,7 +130,7 @@ async function callGroqAPI(prompt, description) {
 }
 
 // Use longer delays on cloud (no Bob CLI) to avoid Groq rate limits
-const GROQ_DELAY = process.env.RAILWAY_ENVIRONMENT ? 15000 : 8000;
+const GROQ_DELAY = (process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_SERVICE_NAME || process.env.PORT) ? 20000 : 8000;
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
