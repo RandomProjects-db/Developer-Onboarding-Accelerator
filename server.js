@@ -265,6 +265,11 @@ app.post('/run', async (req, res) => {
   
   let cloneSuccess = false;
   
+  gitClone.on('error', (err) => {
+    res.write(`data: {"type":"error","data":"Git not available: ${err.message}. Please run this tool locally."}\n\n`);
+    res.end();
+  });
+  
   gitClone.on('close', async (code) => {
     if (code === 0) {
       cloneSuccess = true;
