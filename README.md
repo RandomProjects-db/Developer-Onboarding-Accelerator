@@ -13,7 +13,7 @@ Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impac
 
 | IBM Bob Shell | CLI — All 4 files via Bob | Web UI |
 |---|---|---|
-| ![Bob Shell](bob_sessions/IBM-BOB.png) | ![CLI](bob_sessions/Screenshot%202026-05-03%20at%205.22.47%E2%80%AFPM.png) | ![Web UI](bob_sessions/Screenshot%202026-05-03%20at%205.25.58%E2%80%AFPM.png) |
+| ![Bob Shell](bob_sessions/IBM-BOB.png) | ![CLI](bob_sessions/Screenshot%202026-05-03%20at%205.25.58%E2%80%AFPM.png) | ![Web UI](bob_sessions/Screenshot%202026-05-03%20at%205.22.47%E2%80%AFPM.png) |
 
 ---
 
