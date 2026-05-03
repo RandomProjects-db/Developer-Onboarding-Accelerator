@@ -4,12 +4,25 @@
 
 Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impact faster*
 
+## Quick start (fastest)
+
+```bash
+# Runs via the published npm package (recommended for judges)
+npx repo-onboarder https://github.com/expressjs/express
+# Output written to ./output
+```
+
+> If IBM Bob CLI is installed and authenticated, it will be used automatically.  
+> If not, the tool falls back to Groq (configure `GROQ_API_KEY`).
+
 ## 🎬 Demo Video 🎬
+
 > Click the thumbnail below to watch the demo on YouTube
 
 [![▶ Watch Demo on YouTube](https://img.youtube.com/vi/9qsrnJGC8fg/maxresdefault.jpg)](https://www.youtube.com/watch?v=9qsrnJGC8fg)
 
 ## 📸 Screenshots
+
 > [View all screenshots in bob_sessions/](bob_sessions/)
 
 | IBM Bob Shell | CLI — All 4 files via Bob | Web UI |
@@ -20,7 +33,7 @@ Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impac
 
 ## The Problem
 
-Every developer has been there: you join a new project, clone the repo, and stare at thousands of lines of unfamiliar code. Where do you start? What does this thing actually do? Which files matter? How do you run the tests?
+Every developer has been there: you join a new project, clone the repo, and stare at thousands of lines of unfamiliar code. Where do you start? What does this thing actually do? Which files matter?
 
 **Onboarding a developer to a new codebase takes 4–8 hours on average.** That's time spent:
 - Reading through files with no clear entry point
@@ -60,7 +73,7 @@ IBM Bob reads the actual code, understands it, and writes documentation that wou
 
 | Metric | Before | After |
 |--------|--------|-------|
-| Time to understand a new repo | 4–8 hours | 5–10 minutes |
+| Time to get an actionable orientation | 4–8 hours | ~5–10 minutes |
 | Documentation written manually | Hours of work | Zero |
 | Barrier to open source contribution | High | Low |
 | New hire productivity | Day 3–5 | Day 1 |
@@ -79,7 +92,7 @@ IBM Bob is the **primary AI engine** for this tool. Bob is not a helper or an ad
 
 For each repository, the tool:
 
-1. Clones the repo and analyzes the top 20 most relevant files
+1. Clones the repo and analyzes the top 20 most relevant files (entry points + core modules + key configs)
 2. Builds a structured codebase snapshot (code + file structure)
 3. Calls `bob do "<prompt>"` four times with targeted, role-based prompts:
    - *"You are a technical documentation expert. Given this codebase snapshot, generate a comprehensive README..."*
@@ -88,9 +101,10 @@ For each repository, the tool:
    - *"You are a test engineer. Generate unit tests for the main functions..."*
 4. Captures Bob's output and writes it directly to files
 
-Bob's ability to understand code context, infer intent, and write in natural language is what makes the output genuinely useful — not just a file listing or a summary, but real documentation a developer can act on.
+Bob's ability to understand code context, infer intent, and write in natural language is what makes the output genuinely useful — not just a file listing or a summary, but real documentation a developer can act on immediately.
 
-**Fallback chain:** If Bob times out or is unavailable (e.g., in cloud deployment), the tool automatically falls back to a Groq LLM chain: `llama-3.3-70b-versatile` → `llama-4-scout-17b-16e-instruct` → `llama-3.1-8b-instant` → `allam-2-7b`. This makes the tool resilient and deployable anywhere.
+**Fallback chain:** If Bob times out or is unavailable (e.g., in cloud deployment), the tool automatically falls back to a Groq LLM chain:  
+`llama-3.3-70b-versatile` → `meta-llama/llama-4-scout-17b-16e-instruct` → `llama-3.1-8b-instant` → `allam-2-7b`.
 
 ---
 
@@ -154,7 +168,7 @@ Edit `.env`:
 GROQ_API_KEY=your_groq_api_key_here   # Free at https://console.groq.com
 ```
 
-> IBM Bob is used automatically if you have the Bob CLI installed and authenticated locally. `GROQ_API_KEY` is the fallback.
+> IBM Bob is used automatically if you have the Bob CLI installed and authenticated locally. `GROQ_API_KEY` is only needed for the fallback.
 
 ---
 
@@ -237,6 +251,13 @@ dev-onboarder/
 
 ---
 
+## Limitations
+
+- The tool analyzes a focused subset of files (by default, the top 20) for speed.
+- Generated tests are a starting point and may need path fixes, mocks, or dependency setup depending on the target repository.
+
+---
+
 ## Running the Generated Tests
 
 The generated `TESTS-GENERATED.js` uses Jest. To run:
@@ -248,8 +269,8 @@ cp output/TESTS-GENERATED.js tests/
 npx jest tests/TESTS-GENERATED.js
 ```
 
-> **Note:** Generated tests are a starting point. You may need to adjust import paths or add mocks depending on the repo. Think of them as a scaffold, not a final test suite — they give you structure and coverage ideas instantly.
->
+> **Note:** Generated tests are a starting point. You may need to adjust import paths or add mocks depending on the repo. Think of them as a scaffold, not a final test suite.
+
 > **Troubleshooting:** If tests fail, check that:
 > - Import paths match your project structure
 > - Required dependencies are installed
@@ -259,9 +280,9 @@ npx jest tests/TESTS-GENERATED.js
 
 ## Why This Matters
 
-The theme of this hackathon is *"Turn idea into impact faster."* Developer onboarding is one of the biggest hidden costs in software development — and it's completely solvable with AI.
+The theme of this hackathon is *"Turn idea into impact faster."* Developer onboarding is one of the biggest hidden costs in software development — and it's solvable with AI.
 
-This tool doesn't just demonstrate what IBM Bob can do. It solves a real problem that every developer faces, every time they touch a new codebase. The impact is immediate, measurable, and scales to every GitHub repository that exists.
+This tool doesn't just demonstrate what IBM Bob can do. It solves a real problem that every developer faces, every time they touch a new codebase. The impact is immediate, measurable, and scales across teams and open source.
 
 ---
 
