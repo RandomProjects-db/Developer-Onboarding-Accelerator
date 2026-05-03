@@ -103,6 +103,7 @@ function startSSE(url) {
     
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
+    let buffer = '';
     
     function readStream() {
       reader.read().then(({ done, value }) => {
@@ -113,16 +114,20 @@ function startSSE(url) {
         }
         
         const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
+        buffer += chunk;
         
-        lines.forEach(line => {
-          if (line.startsWith('data: ')) {
-            const data = line.substring(6);
+        // Process complete SSE messages (separated by \n\n)
+        const messages = buffer.split('\n\n');
+        buffer = messages.pop(); // Keep incomplete message in buffer
+        
+        messages.forEach(message => {
+          if (message.startsWith('data: ')) {
+            const data = message.substring(6);
             try {
-              const message = JSON.parse(data);
-              handleSSEMessage(message);
+              const parsed = JSON.parse(data);
+              handleSSEMessage(parsed);
             } catch (e) {
-              console.error('Failed to parse SSE message:', e);
+              console.error('Failed to parse SSE message:', e, 'Data:', data.substring(0, 100));
             }
           }
         });
