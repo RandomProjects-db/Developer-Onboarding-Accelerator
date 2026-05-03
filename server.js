@@ -312,26 +312,23 @@ app.post('/run', async (req, res) => {
         }
         
         if (code === 0 && cliWorked) {
-          // Bob CLI worked - read output files and check if they're valid
+          // Bob CLI worked - read output files
           const outputDir = path.join(__dirname, 'output');
           
-          try {
-            const files = {
-              readme: fs.readFileSync(path.join(outputDir, 'README-GENERATED.md'), 'utf8'),
-              architecture: fs.readFileSync(path.join(outputDir, 'ARCHITECTURE.md'), 'utf8'),
-              gettingStarted: fs.readFileSync(path.join(outputDir, 'GETTING-STARTED.md'), 'utf8'),
-              tests: fs.readFileSync(path.join(outputDir, 'TESTS-GENERATED.js'), 'utf8')
-            };
-            
-            // Send files directly - CLI handles its own fallback
-            const finalMessage = { type: 'complete', files };
-            res.write(`data: ${JSON.stringify(finalMessage)}\n\n`);
-            res.end();
-          } catch (error) {
-            // Failed to read files - fallback to Groq
-            res.write('data: {"type":"log","data":"⚠️  Bob CLI output not found, switching to Groq API..."}\n\n');
-            await generateWithGroq(repoPath, url, res);
-          }
+          const readFile = (f) => {
+            try { return fs.readFileSync(path.join(outputDir, f), 'utf8'); } catch(e) { return ''; }
+          };
+
+          const files = {
+            readme: readFile('README-GENERATED.md'),
+            architecture: readFile('ARCHITECTURE.md'),
+            gettingStarted: readFile('GETTING-STARTED.md'),
+            tests: readFile('TESTS-GENERATED.js')
+          };
+
+          const finalMessage = { type: 'complete', files };
+          res.write(`data: ${JSON.stringify(finalMessage)}\n\n`);
+          res.end();
         } else {
           // Bob CLI failed - fallback to Groq
           res.write('data: {"type":"log","data":"⚠️  Bob CLI unavailable, switching to Groq API..."}\n\n');
