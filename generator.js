@@ -121,6 +121,8 @@ async function callGroqAPI(prompt, description) {
 
 // Use longer delays on cloud (no Bob CLI) to avoid Groq rate limits
 const GROQ_DELAY = process.env.RAILWAY_ENVIRONMENT ? 15000 : 8000;
+
+function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
