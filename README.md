@@ -10,6 +10,7 @@ Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impac
 [![▶ Watch Demo on YouTube](https://img.youtube.com/vi/9qsrnJGC8fg/maxresdefault.jpg)](https://www.youtube.com/watch?v=9qsrnJGC8fg)
 
 ## 📸 Screenshots
+> [View all screenshots in bob_sessions/](bob_sessions/)
 
 | IBM Bob Shell | CLI — All 4 files via Bob | Web UI |
 |---|---|---|
