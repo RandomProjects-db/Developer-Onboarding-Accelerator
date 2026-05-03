@@ -1,2 +1,5 @@
 [phases.setup]
-nixPkgs = ["git", "nodejs_18"]
+nixPkgs = ["git", "nodejs_18", "npm-9_x"]
+
+[start]
+cmd = "node server.js"
