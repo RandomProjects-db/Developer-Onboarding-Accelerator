@@ -316,7 +316,14 @@ app.post('/run', async (req, res) => {
           const outputDir = path.join(__dirname, 'output');
           
           const readFile = (f) => {
-            try { return fs.readFileSync(path.join(outputDir, f), 'utf8'); } catch(e) { return ''; }
+            try { 
+              const content = fs.readFileSync(path.join(outputDir, f), 'utf8');
+              res.write(`data: {"type":"log","data":"   📄 Read ${f}: ${content.length} chars"}\n\n`);
+              return content;
+            } catch(e) { 
+              res.write(`data: {"type":"log","data":"   ⚠️  Missing ${f}: ${e.message}"}\n\n`);
+              return ''; 
+            }
           };
 
           const files = {
