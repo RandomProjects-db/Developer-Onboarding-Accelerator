@@ -4,7 +4,16 @@
 
 Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impact faster*
 
-[![Demo Video](https://img.youtube.com/vi/9qsrnJGC8fg/0.jpg)](https://www.youtube.com/watch?v=9qsrnJGC8fg)
+## 🎬 Demo Video
+> Click the thumbnail below to watch the demo on YouTube
+
+[![▶ Watch Demo on YouTube](https://img.youtube.com/vi/9qsrnJGC8fg/maxresdefault.jpg)](https://www.youtube.com/watch?v=9qsrnJGC8fg)
+
+## 📸 Screenshots
+
+| IBM Bob Shell | CLI — All 4 files via Bob | Web UI |
+|---|---|---|
+| ![Bob Shell](bob_sessions/IBM-BOB.png) | ![CLI](bob_sessions/Screenshot%202026-05-03%20at%205.22.47%E2%80%AFPM.png) | ![Web UI](bob_sessions/Screenshot%202026-05-03%20at%205.25.58%E2%80%AFPM.png) |
 
 ---
 
