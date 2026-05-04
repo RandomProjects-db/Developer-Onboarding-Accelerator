@@ -18,6 +18,14 @@ Built for the **IBM Bob Dev Day Hackathon 2026** · Theme: *Turn idea into impac
 
 ---
 
+## 🚀 Try It Now (No Installation Required)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/RandomProjects-db/Developer-Onboarding-Accelerator?quickstart=1)
+
+Click the badge above to launch a pre-configured development environment in your browser. The environment includes Node.js 20, all dependencies, and the web UI ready to run on port 3000. Perfect for testing without local setup!
+
+---
+
 ## The Problem
 
 Every developer has been there: you join a new project, clone the repo, and stare at thousands of lines of unfamiliar code. Where do you start? What does this thing actually do? Which files matter? How do you run the tests?
