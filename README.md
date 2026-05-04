@@ -103,7 +103,7 @@ We ran the same 4 prompts against the same repo (`expressjs/express`) using IBM 
 
 > IBM Bob produced the deepest, most actionable output — and it's fully automated in one command.
 
-📊 **[Full comparison with detailed analysis →](output/compare/COMPARISON.md)**
+📊 **[Full comparison with detailed analysis →](output/benchmark/COMPARISON.md)**
 
 ---
 
