@@ -89,6 +89,24 @@ IBM Bob reads the actual code, understands it, and writes documentation that wou
 
 ---
 
+## AI Benchmark: IBM Bob vs Others
+
+We ran the same 4 prompts against the same repo (`expressjs/express`) using IBM Bob, ChatGPT 4o, Perplexity Sonar, and Manus AI.
+
+| Dimension | IBM Bob | ChatGPT 4o | Perplexity | Manus AI |
+|-----------|---------|------------|------------|----------|
+| README quality | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| Architecture depth | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Getting started | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Tests generated | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Automation | ⭐⭐⭐⭐⭐ | ⭐ | ⭐ | ⭐ |
+
+> IBM Bob produced the deepest, most actionable output — and it's fully automated in one command.
+
+📊 **[Full comparison with detailed analysis →](output/compare/COMPARISON.md)**
+
+---
+
 ## How IBM Bob Is Used
 
 IBM Bob is the **primary AI engine** for this tool. Bob is not a helper or an add-on — it is the core of what makes this work.
