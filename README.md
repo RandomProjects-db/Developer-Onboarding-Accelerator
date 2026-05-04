@@ -18,11 +18,6 @@ npx repo-onboarder https://github.com/expressjs/express
 ```bash
 GROQ_API_KEY=your_key npx repo-onboarder <repo-url>
 ```
-
-```bash
-PLATFORM: Railway (Groq Support Only)
-URL: https://developer-onboarding-accelerator-production.up.railway.app/
-```
 ## 🎬 Demo Video 🎬
 
 > Click the thumbnail below to watch the demo on YouTube
@@ -297,13 +292,6 @@ dev-onboarder/
 │   └── app.js      # Frontend — SSE client, markdown rendering
 └── .env.example    # Environment variable template
 ```
-
----
-
-## Limitations
-
-- The tool analyzes a focused subset of files (by default, the top 20) for speed.
-- Generated tests are a starting point and may need path fixes, mocks, or dependency setup depending on the target repository.
 
 ---
 
