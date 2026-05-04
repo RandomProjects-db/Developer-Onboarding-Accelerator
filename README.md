@@ -28,9 +28,9 @@ GROQ_API_KEY=your_key npx repo-onboarder <repo-url>
 
 > [View all screenshots in bob_sessions/](bob_sessions/)
 
-| IBM Bob Shell | CLI — All 4 files via Bob | Web UI |
-|---|---|---|
-| ![Bob Shell](bob_sessions/Screenshot%202026-05-03%20at%205.22.47%E2%80%AFPM.png) | ![CLI](bob_sessions/IBM-BOB.png) | ![Web UI](bob_sessions/Screenshot%202026-05-03%20at%205.25.58%E2%80%AFPM.png) |
+| IBM Bob Shell | CLI — All 4 files via Bob | Web UI | Bob in Action |
+|---|---|---|---|
+| ![Bob Shell](bob_sessions/Screenshot%202026-05-03%20at%205.22.47%E2%80%AFPM.png) | ![CLI](bob_sessions/IBM-BOB.png) | ![Web UI](bob_sessions/Screenshot%202026-05-03%20at%205.25.58%E2%80%AFPM.png) | ![Bob in Action](bob_sessions/action.png) |
 
 ---
 
