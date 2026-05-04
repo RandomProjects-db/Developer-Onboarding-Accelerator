@@ -19,6 +19,10 @@ npx repo-onboarder https://github.com/expressjs/express
 GROQ_API_KEY=your_key npx repo-onboarder <repo-url>
 ```
 
+```bash
+PLATFORM: Railway (Groq Support Only)
+URL: https://developer-onboarding-accelerator-production.up.railway.app/
+```
 ## 🎬 Demo Video 🎬
 
 > Click the thumbnail below to watch the demo on YouTube
