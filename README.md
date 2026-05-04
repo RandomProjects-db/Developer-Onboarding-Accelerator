@@ -219,6 +219,47 @@ Output files are saved to `./output/` in your current directory.
 
 ---
 
+## Docker
+
+Run the tool in a container without installing Node.js locally. The Docker image is automatically published to GitHub Container Registry.
+
+### Pull and Run
+
+```bash
+# Pull the latest image
+docker pull ghcr.io/randomprojects-db/developer-onboarding-accelerator:latest
+
+# Run the web UI
+docker run -p 3000:3000 \
+  -e GROQ_API_KEY=your_key_here \
+  ghcr.io/randomprojects-db/developer-onboarding-accelerator:latest
+
+# Open http://localhost:3000
+```
+
+### Run CLI in Docker
+
+```bash
+# Run CLI and save output to local directory
+docker run --rm \
+  -v $(pwd)/output:/app/output \
+  -e GROQ_API_KEY=your_key_here \
+  ghcr.io/randomprojects-db/developer-onboarding-accelerator:latest \
+  node cli.js https://github.com/expressjs/express
+```
+
+### Build Locally
+
+```bash
+# Build from source
+docker build -t dev-onboarder .
+
+# Run
+docker run -p 3000:3000 -e GROQ_API_KEY=your_key dev-onboarder
+```
+
+---
+
 ## Usage
 
 ### CLI
