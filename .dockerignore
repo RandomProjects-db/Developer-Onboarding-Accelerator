@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.git
+.bob
+.DS_Store
+.temp-repos
+node_modules
+output/Version*
+bob_sessions
