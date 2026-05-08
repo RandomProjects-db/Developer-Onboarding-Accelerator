@@ -1,6 +1,6 @@
 {
   "name": "repo-onboarder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn any GitHub repo into a complete onboarding package — README, Architecture, Getting Started, and Tests — powered by IBM Bob",
   "main": "index.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha output/TESTS-GENERATED.js --timeout 5000"
   },
   "keywords": [
     "onboarding",
@@ -31,5 +31,9 @@
   "dependencies": {
     "dotenv": "^16.6.1",
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "mocha": "^11.7.5",
+    "supertest": "^7.2.2"
   }
 }

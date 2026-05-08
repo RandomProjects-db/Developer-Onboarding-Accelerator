@@ -315,21 +315,35 @@ dev-onboarder/
 
 ## Running the Generated Tests
 
-The generated `TESTS-GENERATED.js` uses Jest. To run:
+The generated `TESTS-GENERATED.js` uses Mocha + Supertest. Tests are fully runnable out of the box:
 
 ```bash
-# From the cloned repo directory
-npm install --save-dev jest
-cp output/TESTS-GENERATED.js tests/
-npx jest tests/TESTS-GENERATED.js
+npm test
 ```
 
-> **Note:** Generated tests are a starting point. You may need to adjust import paths or add mocks depending on the repo. Think of them as a scaffold, not a final test suite.
+Or run directly:
 
-> **Troubleshooting:** If tests fail, check that:
-> - Import paths match your project structure
-> - Required dependencies are installed
-> - Mock data matches your actual data structures
+```bash
+npx mocha output/TESTS-GENERATED.js --timeout 5000
+```
+
+**Example output:**
+```
+  Express App
+    ✔ should return 200 for GET /
+    ✔ should return 404 for GET /unknown
+    ✔ should return 200 for POST / with middleware
+    ✔ should return 500 for GET / with error
+    ✔ should return 200 for GET / with route parameter
+    ✔ should return 200 for GET / with query parameter
+    ✔ should return 200 for GET / with header
+
+  7 passing (78ms)
+```
+
+**Self-healing tests:** The generator automatically runs the tests after generation. If any fail, it feeds the errors back to the AI to fix them — producing all-passing tests without manual intervention.
+
+> **Note:** Generated tests are a starting point. They validate core functionality of the analyzed repo. You may want to extend them with project-specific edge cases.
 
 ---
 

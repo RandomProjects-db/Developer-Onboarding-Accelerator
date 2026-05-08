@@ -1,75 +1,85 @@
-I've generated comprehensive unit tests for Express.js core functionality using Mocha and Supertest. The test suite includes:
+const express = require('express');
+const supertest = require('supertest');
+const assert = require('assert');
 
-**Test Coverage:**
+describe('Express App', () => {
+  it('should return 200 for GET /', (done) => {
+    const app = express();
+    app.get('/', (req, res) => {
+      res.send('Hello World!');
+    });
+    supertest(app)
+      .get('/')
+      .expect(200, 'Hello World!')
+      .end(done);
+  });
 
-1. **Application Initialization** (4 tests)
-   - Instance creation
-   - Default settings
-   - Custom properties
-   - Feature enabling/disabling
+  it('should return 404 for GET /unknown', (done) => {
+    const app = express();
+    supertest(app)
+      .get('/unknown')
+      .expect(404)
+      .end(done);
+  });
 
-2. **Routing - GET Requests** (5 tests)
-   - Basic routes
-   - JSON responses
-   - Route parameters
-   - Query parameters
-   - 404 handling
+  it('should return 200 for POST / with middleware', (done) => {
+    const app = express();
+    app.use((req, res, next) => {
+      req.middleware = true;
+      next();
+    });
+    app.post('/', (req, res) => {
+      assert(req.middleware);
+      res.send('Hello World!');
+    });
+    supertest(app)
+      .post('/')
+      .expect(200, 'Hello World!')
+      .end(done);
+  });
 
-3. **Routing - POST/PUT/DELETE** (4 tests)
-   - JSON body parsing
-   - URL-encoded forms
-   - PUT operations
-   - DELETE operations
+  it('should return 500 for GET / with error', (done) => {
+    const app = express();
+    app.get('/', (req, res) => {
+      throw new Error('Test error');
+    });
+    supertest(app)
+      .get('/')
+      .expect(500)
+      .end(done);
+  });
 
-4. **Middleware Functionality** (4 tests)
-   - Execution order
-   - Route-specific middleware
-   - Error handling
-   - Async middleware
+  it('should return 200 for GET / with route parameter', (done) => {
+    const app = express();
+    app.get('/:id', (req, res) => {
+      res.send(`Hello World! ${req.params.id}`);
+    });
+    supertest(app)
+      .get('/123')
+      .expect(200, 'Hello World! 123')
+      .end(done);
+  });
 
-5. **Request Object** (3 tests)
-   - Headers access
-   - Method and path info
-   - Cookie parsing
+  it('should return 200 for GET / with query parameter', (done) => {
+    const app = express();
+    app.get('/', (req, res) => {
+      res.send(`Hello World! ${req.query.name}`);
+    });
+    supertest(app)
+      .get('/?name=John')
+      .expect(200, 'Hello World! John')
+      .end(done);
+  });
 
-6. **Response Object** (5 tests)
-   - Status codes
-   - Custom headers
-   - Content types
-   - Method chaining
-   - Redirects
-
-7. **Error Handling** (3 tests)
-   - Synchronous errors
-   - 404 errors
-   - Async error propagation
-
-8. **Router** (3 tests)
-   - Router mounting
-   - Nested routers
-   - Router-level middleware
-
-9. **Edge Cases** (8 tests)
-   - Empty responses
-   - Large payloads
-   - Special characters
-   - Multiple handlers
-   - Case sensitivity
-   - Trailing slashes
-   - Concurrent requests
-   - Timeouts
-
-10. **Static Files & Settings** (4 tests)
-    - Static file serving
-    - Application settings
-    - View engine config
-    - Port configuration
-
-**Total: 43 comprehensive test cases**
-
-The tests use proper Mocha structure with describe/it blocks, include assertions using Node.js assert module, and leverage Supertest for HTTP testing. All tests follow best practices with proper async handling and error checking.
-
-To run the tests:
-```bash
-npm test
-```
+  it('should return 200 for GET / with header', (done) => {
+    const app = express();
+    app.get('/', (req, res) => {
+      res.send(`Hello World! ${req.header('X-Custom-Header')}`);
+    });
+    supertest(app)
+      .get('/')
+      .set('X-Custom-Header', 'Custom Value')
+      .expect(200, 'Hello World! Custom Value')
+      .end(done);
+  });
+});

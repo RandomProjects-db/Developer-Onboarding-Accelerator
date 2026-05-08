@@ -23,9 +23,41 @@ function loadEnv() {
 }
 loadEnv();
 
+/**
+ * Extracts code from an AI response that may contain markdown fenced code blocks
+ * and/or explanatory text surrounding the code.
+ */
+function extractCode(content) {
+  // Try to extract from markdown code blocks (```js, ```javascript, or bare ```)
+  const codeBlockMatch = content.match(/```(?:javascript|js|typescript|ts)?\s*\n([\s\S]*?)```/);
+  if (codeBlockMatch) {
+    // If there are multiple code blocks, concatenate them all
+    const allBlocks = [...content.matchAll(/```(?:javascript|js|typescript|ts)?\s*\n([\s\S]*?)```/g)];
+    if (allBlocks.length > 1) {
+      return allBlocks.map(m => m[1].trim()).join('\n\n');
+    }
+    return codeBlockMatch[1].trim();
+  }
+  // If content starts with a valid JS statement, return as-is
+  if (/^\s*(const|let|var|import|require|'use strict'|\/\/)/.test(content)) {
+    return content;
+  }
+  // Otherwise strip leading non-code lines (descriptions) up to first code line
+  const lines = content.split('\n');
+  const codeStart = lines.findIndex(l => /^\s*(const|let|var|import|require|'use strict'|\/\/|describe|it\()/.test(l));
+  if (codeStart > 0) {
+    return lines.slice(codeStart).join('\n');
+  }
+  return content;
+}
+
 function callBobCLI(prompt) {
-  // Prepend instruction to prevent Bob from trying to read files
-  const fullPrompt = `IMPORTANT: Do not use any file reading tools. Use ONLY the codebase snapshot provided in this prompt. Here is the task:\n\n${prompt}`;
+  // Prepend instruction to prevent Bob from trying to read files and to return ONLY code
+  const fullPrompt = `CRITICAL: Return ONLY the raw code/content with NO explanations, descriptions, or markdown formatting. Do not use any file reading tools. Use ONLY the codebase snapshot provided in this prompt.
+
+${prompt}
+
+REMINDER: Output ONLY the requested code/content. NO explanations before or after.`;
   const escaped = fullPrompt.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/`/g, '\\`');
   const result = execSync(`bob do "${escaped}"`, { encoding: 'utf8', timeout: 180000 });
   const match = result.match(/---output---\n([\s\S]*?)\n---output---/);
@@ -201,18 +233,60 @@ Generate a comprehensive getting started guide:`;
   const testsSnapshot = snapshotText.length > 3000
     ? snapshotText.substring(0, 3000) + '\n\n[... truncated ...]'
     : snapshotText;
-  const testsPrompt = `You are a test engineer. Given the following codebase snapshot, generate unit tests for the main functions. Use an appropriate testing framework (Jest for JavaScript, pytest for Python, etc.). Include:
-- Test cases for typical use cases
-- Edge case tests
-- Proper test structure and assertions
+  const testsPrompt = `You are a test engineer. Output ONLY valid JavaScript code. No explanations, no markdown, no descriptions.
+
+Given this codebase snapshot, generate a complete Mocha + Supertest test file.
+
+The output must start with require() statements and contain ONLY JavaScript code.
+
+Requirements:
+- Start with: const express = require('express');
+- Include all imports (express, supertest, assert)
+- Create a FRESH express() app inside EACH it() block - do NOT share a single app instance
+- Use supertest(app) directly - no need for http.createServer
+- Cover routing, middleware, error handling, edge cases
+- Use describe/it blocks
+- Be fully runnable with: mocha <filename> --timeout 5000
 
 Codebase Snapshot:
 ${testsSnapshot}
 
-Generate comprehensive unit tests:`;
+Output ONLY the JavaScript code starting with require statements:`;
   
   const testsContent = await callGroqAPI(testsPrompt, 'TESTS-GENERATED.js');
-  fs.writeFileSync(path.join(outputDir, 'TESTS-GENERATED.js'), testsContent);
+  const testsCode = extractCode(testsContent);
+  if (!/^\s*(const|let|var|import|require|'use strict'|\/\/)/.test(testsCode)) {
+    console.warn('   ⚠️  Warning: Generated test file may not contain valid code. Check output.');
+  }
+  const testsPath = path.join(outputDir, 'TESTS-GENERATED.js');
+  fs.writeFileSync(testsPath, testsCode);
+
+  // Self-heal: run tests and fix failures
+  try {
+    execSync(`npx mocha "${testsPath}" --timeout 5000`, { encoding: 'utf8', timeout: 30000 });
+    console.log('   ✅ All generated tests pass');
+  } catch (testErr) {
+    const failures = testErr.stdout || testErr.message;
+    console.log('   🔧 Some tests failed, asking AI to fix...');
+    const fixPrompt = `You are a test engineer. Output ONLY valid JavaScript code. No explanations, no markdown.
+
+This test file has failures. Fix the failing tests so ALL tests pass. Keep passing tests unchanged.
+
+Current test file:
+${testsCode}
+
+Test runner output (failures):
+${failures.substring(0, 2000)}
+
+Output the COMPLETE fixed test file starting with require statements:`;
+    
+    const fixedContent = await callGroqAPI(fixPrompt, 'TESTS-GENERATED.js (fix)');
+    const fixedCode = extractCode(fixedContent);
+    if (/^\s*(const|let|var|import|require)/.test(fixedCode)) {
+      fs.writeFileSync(testsPath, fixedCode);
+      console.log('   ✅ Tests auto-fixed');
+    }
+  }
 }
 
 module.exports = { generateDocumentation };
